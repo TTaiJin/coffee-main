@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 @Controller
 @RequiredArgsConstructor
 public class OrderController {
@@ -25,11 +27,23 @@ public class OrderController {
     }
 
     @GetMapping("/order_detail")
-    public String showOrder(@RequestParam("id") Long orderId, Model model) {
+    public String getOrder(@RequestParam("id") Long orderId, Model model) {
         // OrderId로 주문 정보 가져오기
         Order order = orderService.findById(orderId);
         model.addAttribute("order", order);
         return "order_complete";
     }
 
+    @GetMapping("/orders/checkEmail")
+    public String checkEmail() {
+        return "order_checkEmail";
+    }
+
+    @GetMapping("/orders")
+    public String getOrderList(@RequestParam("email") String email, Model model) {
+        // email로 주문 내역 가져오기
+        List<Order> orders = orderService.findAllByEmail(email);
+        model.addAttribute("orders", orders);
+        return "order_list";
+    }
 }

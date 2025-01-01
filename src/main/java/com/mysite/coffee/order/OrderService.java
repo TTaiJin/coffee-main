@@ -65,4 +65,8 @@ public class OrderService {
     public Order findById(Long orderId) {
         return orderRepository.findById(orderId).orElseThrow();
     }
+
+    public List<Order> findAllByEmail(String email) {
+        return orderRepository.findAllByEmail(email);
+    }
 }
