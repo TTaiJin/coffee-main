@@ -29,7 +29,7 @@ public class Order {
 
     private Integer totalPrice;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "delivery_id")
     private Delivery delivery;
 
@@ -41,4 +41,11 @@ public class Order {
 
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
+
+    public Order(OrderRequestDto orderRequestDto) {
+        this.setEmail(orderRequestDto.getEmail());
+        this.setDelivery(orderRequestDto.getDelivery());
+        this.setTotalPrice(orderRequestDto.getTotalPrice());
+        this.setOrderStatus(OrderStatus.ORDERED);
+    }
 }
